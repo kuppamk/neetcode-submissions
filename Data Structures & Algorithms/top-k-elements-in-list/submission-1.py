@@ -1,0 +1,16 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # 1. Count frequencies - O(N)
+        counts = Counter(nums)
+        
+        buckets = [[] for _ in range(len(nums) + 1)]
+        for num, freq in counts.items():
+            buckets[freq].append(num)
+            
+        # 3. Iterate backwards from the highest frequency bucket - O(N)
+        result = []
+        for i in range(len(buckets) - 1, 0, -1):
+            for num in buckets[i]:
+                result.append(num)
+                if len(result) == k:
+                    return result
